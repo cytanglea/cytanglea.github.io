@@ -328,34 +328,26 @@ function updateboundary() {
     
     d3.json("mo-topo.json", function(error, topology) {
       if (error) throw error;
-      var counties = topojson.feature(topology, topology.objects.counties);
-
-      vg.append("g")
-        .selectAll("path")
-        .data(topojson.feature(topology, topology.objects.tracts).features)
-        .enter().append("path")
-          .attr("fill", function(d) { return color(d.properties.density); })
-          .attr("d", path);
-
-      svg.append("path")
-          .datum(topojson.feature(topology, topology.objects.counties))
-          .attr("fill", "none")
-          .attr("stroke", "#000")
-          .attr("stroke-opacity", 0.5)
-          .attr("d", path);
-        
-      svg.append("path")
-      .datum(topojson.mesh(topology, topology.objects.counties, function(a, b) { return a === b; }))
-      .attr("fill", "none")
-          .attr("stroke", "#000")
-          .attr("stroke-opacity", 0.5)
-          .attr("d", path);
-        
-        svg.append("path")
-      .datum(topojson.mesh(topology, topology.objects.counties, function(a, b) { return a !== b; }))
-      .attr("class", "county-border")
+      svg.append("g")
+    .selectAll("path")
+    .data(topojson.feature(topology, topology.objects.tracts).features)
+    .enter().append("path")
+      .attr("fill", function(d) { return color(d.properties.density); })
       .attr("d", path);
 
+  svg.append("path")
+      .datum(topojson.feature(topology, topology.objects.counties))
+      .attr("fill", "none")
+      .attr("stroke", "#000")
+      .attr("stroke-opacity", 0.3)
+      .attr("d", path);
+ 
+  svg.append("path")
+      .datum(topojson.feature(topology, topology.objects.tracts))
+      .attr("fill", "none")
+      .attr("stroke", "#ffffff")
+      .attr("stroke-opacity", 0.1)
+      .attr("d", path);
         
 });
 }
